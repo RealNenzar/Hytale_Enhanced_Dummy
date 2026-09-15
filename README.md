@@ -1,54 +1,98 @@
-# Hytale Training Dummy
+# Enhanced Training Dummy
 
-Ein wartbares Mod-Grundprojekt für einen echten Trainings-Dummy:
+A Hytale server mod for repeatable damage and DPS tests with a dedicated, craftable training dummy.
 
-- Zeitmessung für 1–600 Sekunden
-- Gesamtschaden, DPS, Treffer und Crits
-- freies Training ohne Zeitlimit
-- einzelne Schadenszahlen ein/aus
-- fünf konfigurierbare Zonenstufen
-- getrennte Sitzungen pro Spieler und Puppe
-- automatisch unzerstörbar in der Hytale-Anbindung
+## Current Features
 
-## Wichtiger Stand
+- Custom item and NPC role using the ID `Enhanced_Training_Dummy`
+- Craftable at the Workbench in the Tinkering category
+- Placement with the secondary-use action (right-click by default)
+- 10-second damage tests started with **F/Use**
+- Five zone simulations with damage multipliers from 100% to 60%
+- Live damage and running totals in chat
+- Final summary with total damage, DPS, hit count, critical-hit count, and duration
+- Independent sessions for every player and dummy
+- No knockback and no applied health damage
+- Pick-up with **Crouch + F**; the item is returned to the inventory
+- English and German translations
 
-Die Kernlogik und die serverseitige Hytale-Anbindung sind implementiert. Sie wurden anhand der tatsächlich gelieferten
-`HytaleServer.jar`-Signaturen und der NPC-ID `Tinkering_Target_Dummy` erstellt. **F** auf der Puppe startet einen
-10-Sekunden-Test und schaltet bei jedem erneuten Drücken zur nächsten Zone. Trefferwerte und das Endergebnis erscheinen
-im Chat; die Puppe ist unzerstörbar.
+## How to Use
 
-Ein grafisches Custom-UI und schwebende World-Space-Zahlen sind noch nicht enthalten. Dafür werden zusätzlich passende
-`.ui`-/HUD-Assets benötigt; die aktuelle Version verwendet bewusst den zuverlässigeren Chat-Workflow.
+1. Craft the **Enhanced Training Dummy** at a Workbench in the Tinkering category.
+2. Place the dummy with right-click.
+3. Look at the dummy and press **F** to start a 10-second test.
+4. Attack the dummy. Each hit and the running total appear in chat.
+5. Press **F** again to restart the test and switch to the next zone.
+6. Hold crouch and press **F** to pick up the dummy.
 
-## Bauen
+Zone multipliers currently use these fixed presets:
 
-Voraussetzungen: JDK 25, Gradle 9 und die `HytaleServer.jar` deiner Installation.
+- Zone 1: 100%
+- Zone 2: 90%
+- Zone 3: 80%
+- Zone 4: 70%
+- Zone 5: 60%
+
+## Damage Integration
+
+The plugin registers `PlayerInteractEvent` for **F/Use** and a `DamageEventSystem` through `getEntityStoreRegistry()`.
+
+Damage is captured after Hytale's gather and filter stages and before health damage is applied. The dummy therefore records the final damage value produced by Hytale's regular damage pipeline, including compatible modifiers from other mods. The damage event is then cancelled, which prevents the dummy from losing health.
+
+Damage that bypasses Hytale's regular damage events and changes health directly cannot be recorded.
+
+Critical-hit detection is not connected yet, so the critical-hit count currently remains at zero.
+
+## Building
+
+Requirements:
+
+- JDK 25
+- Gradle 9
+- `HytaleServer.jar` from your Hytale installation
+
+Set the server JAR through an environment variable:
 
 ```bash
-export HYTALE_SERVER_JAR=/absoluter/pfad/HytaleServer.jar
+export HYTALE_SERVER_JAR=/absolute/path/to/HytaleServer.jar
 gradle clean test jar
 ```
 
-Ohne `HYTALE_SERVER_JAR` wird nur der vollständig testbare Kern gebaut:
+Alternatively, pass it as a Gradle property:
+
+```bash
+gradle clean test jar -PhytaleServerJar=/absolute/path/to/HytaleServer.jar
+```
+
+Without the server JAR, Gradle excludes the Hytale integration and builds only the testable core:
 
 ```bash
 gradle clean test
 ```
 
-Danach liegt die JAR unter `build/libs/TrainingDummy-0.1.0.jar`. Kopiere sie in den Mods-/Plugins-Ordner des Servers.
+The complete mod JAR is generated at:
 
-## Gewünschter Spielablauf
+```text
+build/libs/TrainingDummy-0.4.0.jar
+```
 
-1. Spieler drückt **F** auf der Trainingspuppe.
-2. Menü: Zone, 5/10/30/60 Sekunden oder freies Training, Schadenszahlen, Start/Reset.
-3. Treffer werden serverseitig aus dem finalen `Damage#getAmount()` übernommen.
-4. Bei aktivierten Schadenszahlen wird der effektive Wert über der Puppe angezeigt.
-5. Nach Ablauf erscheint im Chat: Gesamtschaden, DPS, Treffer, Crits und Dauer.
+## Installation
 
-## Anschluss an Hytale 0.6.6
+Copy `TrainingDummy-0.4.0.jar` into the Hytale server's mods directory and restart the server completely.
 
-Die Hauptklasse registriert `PlayerInteractEvent` für **F/Use** und ein `DamageEventSystem` über
-`getEntityStoreRegistry()`. Zielprüfung, Angreiferauflösung, Messung und Unzerstörbarkeit sind bereits angeschlossen.
+The plugin manifest currently declares:
 
-Die Zone-Multiplikatoren sind zunächst neutrale, editierbare Presets. Für exakte Vanilla-Gegnerwerte sollten sie
-nach dem Auslesen der aktuellen Zone-/NPC-Assets deiner Installation ersetzt werden.
+- Group: `de.trainingdummy`
+- Name: `TrainingDummy`
+- Version: `0.4.0`
+- Main class: `de.trainingdummy.hytale.TrainingDummyPlugin`
+- Asset pack: included
+
+## Asset IDs
+
+- Item ID: `Enhanced_Training_Dummy`
+- NPC role ID: `Enhanced_Training_Dummy`
+- Model asset: `NPC/TrainingDummy/TrainingDummy.blockymodel`
+- Texture asset: `NPC/TrainingDummy/TrainingDummy_Default.png`
+
+The old vanilla NPC ID `Tinkering_Target_Dummy` is no longer used by the plugin.
