@@ -1,0 +1,10 @@
+{
+  "Group": "de.trainingdummy",
+  "Name": "TrainingDummy",
+  "Version": "0.4.0",
+  "Description": "DPS tests, damage numbers and zone simulation for training dummies.",
+  "Authors": [{ "Name": "TrainingDummy Team" }],
+  "Main": "de.trainingdummy.hytale.TrainingDummyPlugin",
+  "ServerVersion": "*",
+  "IncludesAssetPack": true
+}

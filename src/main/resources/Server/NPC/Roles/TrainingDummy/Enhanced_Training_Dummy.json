@@ -1,0 +1,17 @@
+{
+  "Type": "Generic",
+  "Appearance": "Enhanced_Training_Dummy",
+  "KnockbackScale": 0,
+  "MotionControllerList": [{"Type": "Walk", "MaxWalkSpeed": 0.1, "Gravity": 10, "MaxFallSpeed": 8, "Acceleration": 10}],
+  "MaxHealth": {"Compute": "MaxHealth"},
+  "Parameters": {"MaxHealth": {"Value": 1000000, "Description": "Protected by Training Dummy plugin"}},
+  "Instructions": [{"Instructions": [{"Sensor": {"Type": "Any"}, "BodyMotion": {"Type": "Nothing"}}]}],
+  "InteractionInstruction": {
+    "Instructions": [{
+      "Continue": true,
+      "Sensor": {"Type": "Any"},
+      "Actions": [{"Type": "SetInteractable", "Interactable": true, "Hint": "server.interactionHints.trainingDummy"}]
+    }]
+  },
+  "NameTranslationKey": "server.npcRoles.Enhanced_Training_Dummy.name"
+}

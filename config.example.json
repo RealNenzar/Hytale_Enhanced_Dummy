@@ -1,0 +1,12 @@
+{
+  "vanillaDummyEntityIds": ["Tinkering_Target_Dummy"],
+  "defaultDurationSeconds": 10,
+  "damageNumbers": true,
+  "zoneMultipliers": {
+    "ZONE_1": 1.00,
+    "ZONE_2": 0.90,
+    "ZONE_3": 0.80,
+    "ZONE_4": 0.70,
+    "ZONE_5": 0.60
+  }
+}

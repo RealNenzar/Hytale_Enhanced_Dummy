@@ -1,0 +1,9 @@
+items.Enhanced_Training_Dummy.name = Enhanced Training Dummy
+items.Enhanced_Training_Dummy.description = A combat target that records real final damage.
+npcRoles.Enhanced_Training_Dummy.name = Enhanced Training Dummy
+interactionHints.trainingDummy = F: Configure | Crouch + F: Pick up
+trainingDummy.inventoryFull = Training Dummy | Inventory full - dummy was not picked up
+trainingDummy.pickedUp = Training Dummy | Picked up and placed in inventory
+trainingDummy.testStarted = Training Dummy | Zone {zone} | {seconds}s test started | Press F again: next zone
+trainingDummy.damage = Damage: {damage} | Total: {total}
+trainingDummy.summary = Training Dummy | Total damage: {total} | DPS: {dps} | Hits: {hits} | Crits: {crits} | Time: {seconds}s

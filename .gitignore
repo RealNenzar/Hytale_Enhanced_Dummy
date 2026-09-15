@@ -1,0 +1,26 @@
+# Gradle and compiled output
+.gradle/
+build/
+out/
+*.class
+
+# Local Hytale installation/assets (large and not part of the mod source)
+HytaleServer.jar
+Assets.zip
+
+# Local tooling and generated diagnostics
+.codegraph/
+telemetry/
+*.log
+
+# IDE and operating-system files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Local configuration; keep config.example.json tracked
+config.json
+*.local.json
+README.md

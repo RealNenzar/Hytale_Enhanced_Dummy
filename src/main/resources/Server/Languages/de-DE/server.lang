@@ -1,0 +1,9 @@
+items.Enhanced_Training_Dummy.name = Verbesserter Trainingsdummy
+items.Enhanced_Training_Dummy.description = Ein Kampfziel, das echten finalen Schaden erfasst.
+npcRoles.Enhanced_Training_Dummy.name = Verbesserter Trainingsdummy
+interactionHints.trainingDummy = F: Einstellen | Geduckt + F: Abbauen
+trainingDummy.inventoryFull = Training Dummy | Inventar voll - Dummy nicht abgebaut
+trainingDummy.pickedUp = Training Dummy | Abgebaut und ins Inventar gelegt
+trainingDummy.testStarted = Training Dummy | Zone {zone} | {seconds}s-Test gestartet | F erneut: nächste Zone
+trainingDummy.damage = Schaden: {damage} | Gesamt: {total}
+trainingDummy.summary = Training Dummy | Gesamtschaden: {total} | DPS: {dps} | Treffer: {hits} | Crits: {crits} | Zeit: {seconds}s
